@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace X.Web.Sitemap
 {
     [Serializable]
-    public enum ChangeFrequency
+    public enum E_ChangeFrequency
     {
         [XmlEnum(Name = "always")]
         Always,

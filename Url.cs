@@ -12,16 +12,16 @@ namespace X.Web.Sitemap
         public String Location { get; set; }
 
         [XmlIgnore]
-        public DateTime TimeStamp { get; set; }
+        public DateTime? TimeStamp { get; set; }
 
         /// <summary>
         /// Please do not use this property change last modification date. 
         /// Use TimeStamp instead.
         /// </summary>
         [XmlElement("lastmod")]
-        public String LastMod
+        public string LastMod
         {
-            get { return TimeStamp.ToString("yyyy-MM-dd"); }
+            get { return TimeStamp.Value.ToString("yyyy-MM-dd"); }
             set
             {
                 TimeStamp = DateTime.Parse(value);
@@ -29,11 +29,21 @@ namespace X.Web.Sitemap
             }
         }
 
+        [System.Xml.Serialization.XmlIgnore]
+        public bool LastModSpecified { get { return this.TimeStamp.HasValue; } }
+
+
         [XmlElement("changefreq")]
-        public ChangeFrequency ChangeFrequency { get; set; }
+        public E_ChangeFrequency? ChangeFrequency { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public bool ChangeFrequencySpecified { get { return this.ChangeFrequency.HasValue; } }
 
         [XmlElement("priority")]
-        public double Priority { get; set; }
+        public double? Priority { get; set; }
+
+        [System.Xml.Serialization.XmlIgnore]
+        public bool PrioritySpecified { get { return this.Priority.HasValue; } }
 
         public Url()
         {
@@ -49,7 +59,7 @@ namespace X.Web.Sitemap
             return new Url
                        {
                            Location = url,
-                           ChangeFrequency = ChangeFrequency.Daily,
+                           ChangeFrequency = E_ChangeFrequency.Daily,
                            Priority = 0.5d,
                            TimeStamp = timeStamp,
                        };
